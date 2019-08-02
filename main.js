@@ -18,7 +18,7 @@ applyLabel();
       Logger.log ('Изминение ставки - началось!');
         var label = AdsApp.labels().withCondition(
              "Name = 'Test'").get().next();
-        var query = 'SELECT CampaignName, CampaignId, AdGroupName, AdGroupId, AdGroupStatus, Clicks, Conversions, AverageCpc, CostPerAllConversion, SearchExactMatchImpressionShare, AllConversionValue, ConversionValue, Cost ' +
+        var query = 'SELECT CampaignName, CampaignId, AdGroupName, AdGroupId, AdGroupStatus, Clicks, Conversions, AverageCpc, CostPerAllConversion, SearchExactMatchImpressionShare, AllConversionValue, ConversionValue, Cost, AveragePosition ' +
             'FROM ADGROUP_PERFORMANCE_REPORT where Labels CONTAINS_ANY ' +
             '[' + label.getId('Test') + '] during LAST_14_DAYS';
              
@@ -34,9 +34,10 @@ applyLabel();
              var roi = conversionValue/cost;
              var clicks = row['Clicks'];
              var averageCpc = row['AverageCpc'];
+             var averagePosition = row['AveragePosition'];
              var searchImpressionShare = row['SearchExactMatchImpressionShare'];
                if (roi > 2 && clicks > 10) {
-             Logger.log(groupName + ',' + groupIds + ',' + conversionValue + ',' + cost + ',' + roi + ',' + clicks + ',' + averageCpc + ',' + searchImpressionShare );
+             Logger.log(groupName + '|id: ' + groupIds + '| цен.конв.: ' + conversionValue + '| стоимость: ' + cost + '|ROI: ' + roi + '|клики: ' + clicks + '|cpc :' + averageCpc + '|сред.поз.: ' + averagePosition + '|%показ.: ' + searchImpressionShare );
                  var goodGroup = row['AdGroupId'];
                  Logger.log (goodGroup);
                  //бидер для групп
